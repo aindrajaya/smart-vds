@@ -38,7 +38,7 @@ describe('Test database utility functions', () => {
       assert.equal(txOriginInfo.name, 'Authorization through tx.origin')
       assert.equal(txOriginInfo.severity, 'HIGH')
       assert.equal(txOriginInfo.swcCode, 'SWC-115')
-      assert.equal(txOriginInfo.mitigations.length, 1)
+      assert.equal(txOriginInfo.mitigations.length, 4)
       assert.equal(txOriginInfo.mitigations[0], 'To authenticate the sender of a transaction, use msg.sender instead of the tx.origin global variable')
     }
   })
