@@ -37,20 +37,28 @@ const scan = async () => {
     const promptAnswers = await fileUtils.promptForFilePath()
     const filePath = promptAnswers.filePath
 
+    console.log(chalk.greenBright(`Retrieving file from path: ${filePath}`))
+
     // Read contents of specified file
     const fileContents = fileUtils.readFileContents(filePath).toString()
 
     // Generate parse tree from retrieved file contents
-    console.log(chalk.greenBright('Parsing Solidity source code...'))
+    console.log(chalk.greenBright('Parsing Solidity source code...', fileContents))
     const parseTree = parser.parse(fileContents)
+
+    console.log(chalk.greenBright('Solidity source code successfully parsed!', parseTree.children.map(node => node.type))) 
 
     // Connect to database
     const establishedConnection = await db.establishDbConnection()
+
+    console.log(establishedConnection ? chalk.greenBright('Database connected') : chalk.redBright('Database not connected'))
 
     if (establishedConnection) {
       // Scan parse tree for vulnerabilities
       console.log(chalk.greenBright('Scanning parse tree for vulnerabilities...'))
       const vulnerabilitiesDetected = await vulnerabilityScanner(parseTree)
+
+      console.log(chalk.greenBright(`Vulnerabilities detected: ${vulnerabilitiesDetected.length}`)) 
 
       // Generate report
       await generateReport(vulnerabilitiesDetected)

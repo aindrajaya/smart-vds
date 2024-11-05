@@ -1,6 +1,6 @@
 // source - https://github.com/ConsenSys/mythril/tree/develop/solidity_examples
 
-pragma solidity 0.8.5;
+pragma solidity ^0.8.5;
 
 contract Origin {
   address public owner;
